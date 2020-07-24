@@ -13,6 +13,7 @@ To get these inputs, you will have to use three other OpenVino models:
 - Facial Landmarks Detection
 ### The Pipeline
 You will have to coordinate the flow of data from the input, and then amongst the different models and finally to the mouse controller. The flow of data will look like this:
+![alt text](https://github.com/MonicaSai7/Computer-Pointer-Controller/blob/master/bin/pipeline.png)
 
 ## Project Set Up and Installation
 ```
