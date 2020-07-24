@@ -1,10 +1,53 @@
 # Computer Pointer Controller
 
-*TODO:* Write a short introduction to your project
+In this project, you will use a gaze detection model to control the mouse pointer of your computer. You will be using the Gaze Estimation model to estimate the gaze of the user's eyes and change the mouse pointer position accordingly. This project will demonstrate your ability to run multiple models in the same machine and coordinate the flow of data between those models.</br></br>
+### How it works
+You will be using the InferenceEngine API from Intel's OpenVino ToolKit to build the project. The gaze estimation model requires three inputs:
+- The head pose
+- The left eye image
+- The right eye image</br>
+
+To get these inputs, you will have to use three other OpenVino models:
+- Face Detection
+- Head Pose Estimation
+- Facial Landmarks Detection
+### The Pipeline
+You will have to coordinate the flow of data from the input, and then amongst the different models and finally to the mouse controller. The flow of data will look like this:
 
 ## Project Set Up and Installation
-*TODO:* Explain the setup procedures to run your project. For instance, this can include your project directory structure, the models you need to download and where to place them etc. Also include details about how to install the dependencies your project requires.
-
+```
+Computer-Pointer-Controller
+│   README.md
+│   requirements.txt   
+│
+└───bin
+│   │   demo.mp4
+│   
+└───intel
+│   └───face-detection-adas-binary-0001
+│   └───gaze-estimation-adas-0002
+│   └───head-pose-estimation-adas-0001
+|   └───landmarks-regression-retail-0009
+|
+└───src
+    │   input_feeder.py
+    │   model.py
+    |   mouse_controller.py
+```
+- Initialize OpenVINO environment</br>
+```source /opt/intel/openvino/bin/setupvars.sh```</br></br>
+- Download required models</br>
+  1. face-detection-adas-binary-0001</br>
+```./downloader.py --name face-detection-adas-binary-0001 --output_dir ~/IntelEdgeAI/Computer-Pointer-Controller```
+  2. gaze-estimation-adas-0002</br>
+  ```./downloader.py --name gaze-estimation-adas-0002 --output_dir ~/IntelEdgeAI/Computer-Pointer-Controller```
+  3. head-pose-estimation-adas-0001</br>
+  ```./downloader.py --name head-pose-estimation-adas-0001 --output_dir ~/IntelEdgeAI/Computer-Pointer-Controller```
+  4. landmarks-regression-retail-0009</br>
+  ```./downloader.py --name landmarks-regression-retail-0009 --output_dir ~/IntelEdgeAI/Computer-Pointer-Controller```</br></br>
+- Install dependencies</br>
+```pip install -r requirements.txt```
+  
 ## Demo
 *TODO:* Explain how to run a basic demo of your model.
 
