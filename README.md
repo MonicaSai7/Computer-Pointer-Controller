@@ -58,7 +58,8 @@ The demo of the project can be run using the following command:
 ```python3 src/main.py -md intel/face-detection-adas-binary-0001/FP32-INT1/face-detection-adas-binary-0001.xml -ml intel/landmarks-regression-retail-0009/FP32/landmarks-regression-retail-0009.xml -mh intel/head-pose-estimation-adas-0001/FP32/head-pose-estimation-adas-0001.xml -mg intel/gaze-estimation-adas-0002/FP32/gaze-estimation-adas-0002.xml -i bin/demo.mp4```
 
 ## Documentation
-python3 src/main.py 
+```python3 src/main.py```
+```
 --helpusage: main.py [-h] -i INPUT [-l CPU_EXTENSION] [-d DEVICE] [-pt PROB_THRESHOLD] 
             [-mg MODEL_GAZE] [-md MODEL_FACEDETECTOR] [-mh MODEL_HEADPOSE] [-ml MODEL_FACELM]
 
@@ -88,7 +89,7 @@ optional arguments:
   -ml MODEL_FACELM, --model_facelm MODEL_FACELM
                         Path to an xml file with a trained face landmarks
                         detector model.
-
+```
 ## Benchmarks
 The application is run on Intel Core i3 (6th Gen) Processor with 12GB of RAM. The results are observed as:</br>
 FP32
