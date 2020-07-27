@@ -5,7 +5,7 @@ This has been provided just to give you an idea of how to structure your model c
 import cv2
 import math
 import numpy as np
-from openvino.inference_engine import IENetwork, IECore
+from openvino.inference_engine import IECore
 
 class Gaze_Estimation:
     '''
@@ -26,7 +26,7 @@ class Gaze_Estimation:
 
     def load_model(self):
         self.plugin = IECore()
-        self.network = IENetwork(model=self.model_xml, weights=self.model_bin)
+        self.network = self.plugin.read_network(model=self.model_xml, weights=self.model_bin)
 
         ### Check for supported layers and add any necessary extensions
         if self.extensions and 'CPU' in self.device:
@@ -41,8 +41,9 @@ class Gaze_Estimation:
             exit(1)
         
         self.exec_network = self.plugin.load_network(network=self.network, device_name=self.device, num_requests=1)
-        self.input_name = [i for i in self.net_plugin.inputs.keys()]
-        self.input_shape = self.net_plugin.inputs[self.input_name[1]].shape
+        self.input_name = [i for i in self.network.inputs.keys()]
+        self.input_shape = self.network.inputs[self.input_name[1]].shape
+        self.output_name = [i for i in self.network.outputs.keys()]
         print("IR successfully loaded into Inference Engine")
 
         return
@@ -50,7 +51,7 @@ class Gaze_Estimation:
     def predict(self, left_eye, right_eye, headpose_angles):
 
         p_left_eye, p_right_eye = self.preprocess_input(left_eye), self.preprocess_input(right_eye)
-        outputs = self.network.infer({'headpose_angles': headpose_angles, 'left_eye_image': p_left_eye, 'right_eye_image': p_right_eye})
+        outputs = self.exec_network.infer({'head_pose_angles': headpose_angles, 'left_eye_image': p_left_eye, 'right_eye_image': p_right_eye})
         coords, gaze_vec = self.preprocess_output(outputs, headpose_angles)
         return coords, gaze_vec
 
