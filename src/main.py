@@ -99,12 +99,14 @@ def main():
     n_frames = 0
     count = 0
     inference_time = 0
-    for frame in input_feed.next_batch():
+    for ret, frame in input_feed.next_batch():
+        if not ret:
+            break
         if frame is not None:
             n_frames += 1
-            cv2.imshow('video', cv2.resize(frame, (500, 500)))
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
             
-            key = cv2.waitKey(60)
             start_inference = time.time()
 
             ### Face Detection
@@ -112,8 +114,6 @@ def main():
             if type(face) == int:
                 logger.error("No face detected")
                 continue
-            fd_time = round(time.time() - start_inference, 5)
-            #logger.info("Face detection took {} seconds.".format(fd_time))
 
             ### Headpose Estimation
             headpose_out = headpose.predict(face)
@@ -130,18 +130,19 @@ def main():
 
             img = cv2.resize(frame, (500, 500))
             cv2.imshow("Visualize", img)
+            cv2.waitKey(60)
             mouse_controller.move(mouse_coord[0], mouse_coord[1])
 
-            if key == 27:
-                break
-    
+    input_feed.close()
     fps = n_frames/inference_time
+    
     logger.error("Total loading time: " + str(total_load_time) + 's')
     logger.error("Total inference time {}s".format(inference_time))
     logger.error("Frames per second: {} fps".format(fps))
-
+    cv2.waitKey(1000)
     cv2.destroyAllWindows()
-    input_feed.close()
+    cv2.waitKey(1)
+    
 
 if __name__ == '__main__':
     main()

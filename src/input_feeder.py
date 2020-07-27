@@ -36,8 +36,8 @@ class InputFeeder:
         '''
         while True:
             for _ in range(10):
-                _, frame=self.cap.read()
-            yield frame
+                ret, frame=self.cap.read()
+            yield ret, frame
 
 
     def close(self):
@@ -46,4 +46,5 @@ class InputFeeder:
         '''
         if not self.input_type=='image':
             self.cap.release()
+        
 
