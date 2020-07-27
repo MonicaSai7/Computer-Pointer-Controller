@@ -32,8 +32,12 @@ Computer-Pointer-Controller
 |
 └───src
     │   input_feeder.py
-    │   model.py
+    │   main.py
     |   mouse_controller.py
+    |   face_detection.py
+    |   facial_landmarks_detection.py
+    |   gaze_estimation.py
+    |   head_pose_estimation.py
 ```
 - Initialize OpenVINO environment</br>
 ```source /opt/intel/openvino/bin/setupvars.sh```</br></br>
@@ -88,27 +92,25 @@ optional arguments:
 ## Benchmarks
 The application is run on Intel Core i3 (6th Gen) Processor with 12GB of RAM. The results are observed as:</br>
 FP32
-  - Total loading time: 0.6915380954742432s
-  - Total inference time 1.7968060970306396s
-  - Frames per second: 32.83604173956335 fps</br>
+  - Total loading time: 0.6858315467834473s
+  - Total inference time 1.8486158847808838s
+  - Frames per second: 31.91577032618286 fps</br>
 
 FP16
-  - Total loading time: 0.9486351013183594s
-  - Total inference time 1.8722038269042969s
-  - Frames per second: 31.513662749828338 fps</br>
+  - Total loading time: 0.765575647354126s
+  - Total inference time 1.7244617938995361s
+  - Frames per second: 34.21357330659262 fps</br>
 
 INT8
-  - Total loading time: 1.4976749420166016s
-  - Total inference time 1.813126802444458s
-  - Frames per second: 32.540470925947474 fps
+  - Total loading time: 1.4180138111114502s
+  - Total inference time 1.7214689254760742s
+  - Frames per second: 34.27305548584531 fps
+
 ## Results
-*TODO:* Discuss the benchmark results and explain why you are getting the results you are getting. For instance, explain why there is difference in inference time for FP32, FP16 and INT8 models.
+The models were tested on various precisons. We can state for a fact that models with low precision use less memory compared to those with higher precisions and also they are computationally less expensive. Through the observed results, it can be observed that when run with low precision the total inference time is comparitively low.
 
 ## Stand Out Suggestions
-This is where you can provide information about the stand out suggestions that you have attempted.
-
-### Async Inference
-If you have used Async Inference in your code, benchmark the results and explain its effects on power and performance of your project.
+The input to the models are accepted dynamically of various formats such as video file or web cam of the device. There is also an option of including CPU extensions such as GPU, VPU, FPGA.
 
 ### Edge Cases
-There will be certain situations that will break your inference flow. For instance, lighting changes or multiple people in the frame. Explain some of the edge cases you encountered in your project and how you solved them to make your project more robust.
+There will be certain situations that will break your inference flow. For instance, lighting changes or multiple people in the frame. In case of poor lighting conditions or any situation which leads to no face detection then the next frame is automatically loaded without performing any inference on it. In case of presence of multiple faces in the frame, any one face is considered for performing inference.
