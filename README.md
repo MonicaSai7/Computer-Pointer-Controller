@@ -86,8 +86,21 @@ optional arguments:
                         detector model.
 
 ## Benchmarks
-*TODO:* Include the benchmark results of running your model on multiple hardwares and multiple model precisions. Your benchmarks can include: model loading time, input/output processing time, model inference time etc.
+The application is run on Intel Core i3 (6th Gen) Processor with 12GB of RAM. The results are observed as:</br>
+FP32
+  - Total loading time: 0.6915380954742432s
+  - Total inference time 1.7968060970306396s
+  - Frames per second: 32.83604173956335 fps</br>
 
+FP16
+  - Total loading time: 0.9486351013183594s
+  - Total inference time 1.8722038269042969s
+  - Frames per second: 31.513662749828338 fps</br>
+
+INT8
+  - Total loading time: 1.4976749420166016s
+  - Total inference time 1.813126802444458s
+  - Frames per second: 32.540470925947474 fps
 ## Results
 *TODO:* Discuss the benchmark results and explain why you are getting the results you are getting. For instance, explain why there is difference in inference time for FP32, FP16 and INT8 models.
 
