@@ -4,7 +4,7 @@ This has been provided just to give you an idea of how to structure your model c
 '''
 import cv2
 import numpy as np
-from openvino.inference_engine import IENetwork, IECore
+from openvino.inference_engine import IECore
 
 class Face_LandMarker:
     '''
@@ -25,7 +25,7 @@ class Face_LandMarker:
 
     def load_model(self):
         self.plugin = IECore()
-        self.network = IENetwork(model=self.model_xml, weights=self.model_bin)
+        self.network = self.plugin.read_network(model=self.model_xml, weights=self.model_bin)
 
         ### Check for supported layers and add any necessary extensions
         if self.extensions and 'CPU' in self.device:
@@ -51,7 +51,7 @@ class Face_LandMarker:
     def predict(self, image):
         
         p_frame = self.preprocess_input(image)
-        outputs = self.network.infer({self.input_name: p_frame})
+        outputs = self.exec_network.infer({self.input_name: p_frame})
         coords = self.preprocess_output(outputs[self.output_name][0])
         left_eye, right_eye, eye_coords = self.get_eyes(coords, image)
         return left_eye, right_eye, eye_coords
@@ -85,7 +85,7 @@ class Face_LandMarker:
 
     def preprocess_input(self, image):
         p_frame = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        p_frame = cv2.resize(image, (self.input_shape[3], self.input_shape[2]))
+        p_frame = cv2.resize(p_frame, (self.input_shape[3], self.input_shape[2]))
         p_frame = p_frame.transpose((2, 0, 1))
         p_frame = p_frame.reshape(1, *p_frame.shape)
         return p_frame
