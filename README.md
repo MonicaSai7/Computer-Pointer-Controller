@@ -50,10 +50,40 @@ Computer-Pointer-Controller
 ```pip install -r requirements.txt```
   
 ## Demo
-*TODO:* Explain how to run a basic demo of your model.
+The demo of the project can be run using the following command:
+```python3 src/main.py -md intel/face-detection-adas-binary-0001/FP32-INT1/face-detection-adas-binary-0001.xml -ml intel/landmarks-regression-retail-0009/FP32/landmarks-regression-retail-0009.xml -mh intel/head-pose-estimation-adas-0001/FP32/head-pose-estimation-adas-0001.xml -mg intel/gaze-estimation-adas-0002/FP32/gaze-estimation-adas-0002.xml -i bin/demo.mp4```
 
 ## Documentation
-*TODO:* Include any documentation that users might need to better understand your project code. For instance, this is a good place to explain the command line arguments that your project supports.
+python3 src/main.py 
+--helpusage: main.py [-h] -i INPUT [-l CPU_EXTENSION] [-d DEVICE] [-pt PROB_THRESHOLD] 
+            [-mg MODEL_GAZE] [-md MODEL_FACEDETECTOR] [-mh MODEL_HEADPOSE] [-ml MODEL_FACELM]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        Path to video file or enter device cam for webcam
+  -l CPU_EXTENSION, --cpu_extension CPU_EXTENSION
+                        MKLDNN (CPU)-targeted custom layers.Absolute path to a
+                        shared library with thekernels impl.
+  -d DEVICE, --device DEVICE
+                        Specify the target device to infer on: CPU, GPU, FPGA
+                        or MYRIAD is acceptable. Sample will look for a
+                        suitable plugin for device specified (CPU by default)
+  -pt PROB_THRESHOLD, --prob_threshold PROB_THRESHOLD
+                        Probability threshold for detections filtering(0.5 by
+                        default)
+  -mg MODEL_GAZE, --model_gaze MODEL_GAZE
+                        Path to an xml file with a trained gaze detector
+                        model.
+  -md MODEL_FACEDETECTOR, --model_facedetector MODEL_FACEDETECTOR
+                        Path to an xml file with a trained face detector
+                        model.
+  -mh MODEL_HEADPOSE, --model_headpose MODEL_HEADPOSE
+                        Path to an xml file with a trained head pose detector
+                        model.
+  -ml MODEL_FACELM, --model_facelm MODEL_FACELM
+                        Path to an xml file with a trained face landmarks
+                        detector model.
 
 ## Benchmarks
 *TODO:* Include the benchmark results of running your model on multiple hardwares and multiple model precisions. Your benchmarks can include: model loading time, input/output processing time, model inference time etc.
